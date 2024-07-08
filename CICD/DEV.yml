@@ -19,6 +19,7 @@ volumes:
 
 networks:
   kong-net:
+    name: kong-net-network
     external: false
 
 services:
