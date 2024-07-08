@@ -77,8 +77,10 @@ services:
       interval: 10s
       timeout: 10s
       retries: 10
-    restart: on-failure:5
+    restart: always
     read_only: true
+    depends_on:
+      - kong-db
     volumes:
       - kong_prefix_vol:${KONG_PREFIX:-/var/run/kong}
       - kong_tmp_vol:/tmp
@@ -107,7 +109,7 @@ services:
       interval: 30s
       timeout: 30s
       retries: 3
-    restart: on-failure
+    restart: always
     stdin_open: true
     tty: true
     networks:
