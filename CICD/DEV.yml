@@ -51,6 +51,7 @@ services:
 
   kong:
     image: "${KONG_DOCKER_TAG:-kong:latest}"
+    container_name: kong
     user: "${KONG_USER:-kong}"
     environment:
       <<: *kong-env
@@ -91,6 +92,7 @@ services:
 
   kong-db:
     image: postgres:9.5
+    container_name: kong-db
     environment:
       POSTGRES_DB: ${KONG_PG_DATABASE:-kong}
       POSTGRES_USER: ${KONG_PG_USER:-kong}
