@@ -5,6 +5,7 @@ x-kong-config:
   KONG_PG_HOST: kong-db
   KONG_PG_USER: ${KONG_PG_USER:-kong}
   KONG_PG_PASSWORD_FILE: /run/secrets/kong_postgres_password
+  KONG_PG_TIMEOUT: 6000
 
 volumes:
   kong_data: {}
@@ -72,7 +73,7 @@ services:
       - "${KONG_INBOUND_PROXY_LISTEN:-0.0.0.0}:8080:8000/tcp"
       # - "${KONG_INBOUND_SSL_PROXY_LISTEN:-0.0.0.0}:8443:8443/tcp"
       - "0.0.0.0:8001:8001/tcp"
-      - "127.0.0.1:8444:8444/tcp"
+      #- "127.0.0.1:8444:8444/tcp"
       - "0.0.0.0:8002:8002/tcp"
     healthcheck:
       test: [ "CMD", "kong", "health" ]
@@ -97,6 +98,7 @@ services:
       POSTGRES_DB: ${KONG_PG_DATABASE:-kong}
       POSTGRES_USER: ${KONG_PG_USER:-kong}
       POSTGRES_PASSWORD_FILE: /run/secrets/kong_postgres_password
+      POSTGRES_MAX_CONNECTIONS: 200
     secrets:
       - kong_postgres_password
     healthcheck:
